@@ -17,12 +17,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: 'gradle'
 
       - name: Dar permisos a Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Ejecutar pruebas
-        run: ./gradlew test
-
-      - name: Construir
-        run: ./gradlew build
+      - name: Construir y ejecutar pruebas
+        run: ./gradlew build --no-daemon
