@@ -62,22 +62,4 @@ public class WalletService {
         return wallet.getBalance();
     }
 
-    //retirar dinero
-    public double withdraw(String walletId, double amount){
-        //validaciones
-        if(amount<0){
-            throw new IllegalArgumentException("Amount cannot be negative");
-        }
-        Wallet wallet = walletRepository.findById(walletId)
-                .orElseThrow(() -> new IllegalArgumentException("Wallet not found"));
-
-        if(wallet.getBalance()<amount){
-            throw new IllegalStateException("Insufficient funds");
-        }
-
-        wallet.withdraw(amount);
-        walletRepository.save(wallet);
-
-        return wallet.getBalance();
-    }
 }
