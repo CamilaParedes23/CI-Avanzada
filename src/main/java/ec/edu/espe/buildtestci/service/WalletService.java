@@ -28,7 +28,7 @@ public class WalletService {
         }
 
         //Regla de negocio: usuario bloqueado
-        if(riskClient.isBloqued(ownerEmail)){
+        if(riskClient.isBlocked(ownerEmail)){
             throw new IllegalStateException("User Blocked");
         }
 

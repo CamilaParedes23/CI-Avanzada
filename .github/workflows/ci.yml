@@ -1,13 +1,15 @@
 name: CI
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
   build-test:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Clonar el repositorio
         uses: actions/checkout@v4
@@ -17,10 +19,12 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'gradle'
 
       - name: Dar permisos a Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Construir y ejecutar pruebas
-        run: ./gradlew build --no-daemon
+      - name: Ejecutar pruebas
+        run: ./gradlew test
+
+      - name: Construir
+        run: ./gradlew build

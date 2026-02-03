@@ -34,7 +34,7 @@ public class WalletServiceTest {
         String email = "camila@espe.edu.ec";
         double initial = 100.0;
 
-        when(riskClient.isBloqued(email)).thenReturn(Boolean.FALSE);
+        when(riskClient.isBlocked(email)).thenReturn(Boolean.FALSE);
         when(walletRepository.existsByOwnerEmail(email)).thenReturn(Boolean.FALSE);
         when(walletRepository.save(any(Wallet.class))).thenAnswer(i -> {
             Wallet wallet = i.getArgument(0);
@@ -48,7 +48,7 @@ public class WalletServiceTest {
         assertNotNull(response.getWalletId());
         assertEquals(100.0, response.getBalance());
 
-        verify(riskClient).isBloqued(email);
+        verify(riskClient).isBlocked(email);
         verify(walletRepository).save(any(Wallet.class));
         verify(walletRepository).existsByOwnerEmail(email);
     }
