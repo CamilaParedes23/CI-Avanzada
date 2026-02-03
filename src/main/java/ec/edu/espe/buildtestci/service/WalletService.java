@@ -63,6 +63,8 @@ public class WalletService {
     }
 
     //retirar dinero
+    // Feature withdraw implemented and tested
+
     public double withdraw(String walletId, double amount){
         //validaciones
         if(amount<0){
