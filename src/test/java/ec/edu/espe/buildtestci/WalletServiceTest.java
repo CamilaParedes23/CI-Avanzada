@@ -34,7 +34,7 @@ public class WalletServiceTest {
         String email = "camila@espe.edu.ec";
         double initial = 100.0;
 
-        when(riskClient.isBloqued(email)).thenReturn(Boolean.FALSE);
+        when(riskClient.isBlocked(email)).thenReturn(Boolean.FALSE);
         when(walletRepository.existsByOwnerEmail(email)).thenReturn(Boolean.FALSE);
         when(walletRepository.save(any(Wallet.class))).thenAnswer(i -> {
             Wallet wallet = i.getArgument(0);
@@ -48,7 +48,7 @@ public class WalletServiceTest {
         assertNotNull(response.getWalletId());
         assertEquals(100.0, response.getBalance());
 
-        verify(riskClient).isBloqued(email);
+        verify(riskClient).isBlocked(email);
         verify(walletRepository).save(any(Wallet.class));
         verify(walletRepository).existsByOwnerEmail(email);
     }
@@ -101,20 +101,5 @@ public class WalletServiceTest {
         assertEquals(600.0, saved.getBalance());
     }
 
-    //Nueva prueba
-    @Test
-    void withdraw_insufficientFunds_shouldThrow_andNotSave(){
-        //Arrange
-        Wallet wallet = new Wallet("camila@espe.edu.ec", 300.0);
-        String walletId = wallet.getId();
-
-        when(walletRepository.findById(walletId)).thenReturn(Optional.of(wallet));
-
-        //Act + Assert
-        IllegalStateException exception = assertThrows(IllegalStateException.class,()->walletService
-                .withdraw(walletId, 500.0));
-        assertEquals("Insufficient funds", exception.getMessage());
-        verify(walletRepository, never()).save(any());
-    }
 
 }

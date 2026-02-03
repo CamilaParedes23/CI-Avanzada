@@ -28,7 +28,7 @@ public class WalletService {
         }
 
         //Regla de negocio: usuario bloqueado
-        if(riskClient.isBloqued(ownerEmail)){
+        if(riskClient.isBlocked(ownerEmail)){
             throw new IllegalStateException("User Blocked");
         }
 
@@ -67,8 +67,8 @@ public class WalletService {
 
     public double withdraw(String walletId, double amount){
         //validaciones
-        if(amount<0){
-            throw new IllegalArgumentException("Amount cannot be negative");
+        if(amount<=0){
+            throw new IllegalArgumentException("Amount must be greater than 0");
         }
         Wallet wallet = walletRepository.findById(walletId)
                 .orElseThrow(() -> new IllegalArgumentException("Wallet not found"));
